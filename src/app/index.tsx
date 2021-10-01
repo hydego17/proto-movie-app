@@ -6,33 +6,30 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-
-import { GlobalStyle } from '../styles/global-styles';
-
-import { HomePage } from './pages/HomePage/Loadable';
-import { NotFoundPage } from './pages/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
+
+import { GlobalStyle } from 'styles/global-styles';
+import { Layout } from 'app/components';
+
+import { AppRoutes } from './routes';
 
 export function App() {
   const { i18n } = useTranslation();
   return (
-    <BrowserRouter>
+    <>
+      <GlobalStyle />
       <Helmet
-        titleTemplate="%s - React Boilerplate"
-        defaultTitle="React Boilerplate"
+        titleTemplate="%s - StockBit Movie"
+        defaultTitle="Movie App"
         htmlAttributes={{ lang: i18n.language }}
       >
-        <meta name="description" content="A React Boilerplate application" />
+        <meta name="description" content="A React Movie App application" />
       </Helmet>
 
-      <Switch>
-        <Route exact path={process.env.PUBLIC_URL + '/'} component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
-    </BrowserRouter>
+      <Layout>
+        <AppRoutes />
+      </Layout>
+    </>
   );
 }

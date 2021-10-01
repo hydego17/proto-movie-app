@@ -1,37 +1,23 @@
-import {
-  configureStore,
-  getDefaultMiddleware,
-  StoreEnhancer,
-} from '@reduxjs/toolkit';
-import { createInjectorsEnhancer } from 'redux-injectors';
-import createSagaMiddleware from 'redux-saga';
+/**
+ * Create the store with dynamic reducers
+ */
 
-import { createReducer } from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
-export function configureAppStore() {
-  const reduxSagaMonitorOptions = {};
-  const sagaMiddleware = createSagaMiddleware(reduxSagaMonitorOptions);
-  const { run: runSaga } = sagaMiddleware;
+import { moviesApi } from '../services/movies';
 
-  // Create the store with saga middleware
-  const middlewares = [sagaMiddleware];
+export const store = configureStore({
+  reducer: {
+    [moviesApi.reducerPath]: moviesApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(moviesApi.middleware),
 
-  const enhancers = [
-    createInjectorsEnhancer({
-      createReducer,
-      runSaga,
-    }),
-  ] as StoreEnhancer[];
+  devTools: process.env.NODE_ENV !== 'production',
+});
 
-  const store = configureStore({
-    reducer: createReducer(),
-    middleware: [...getDefaultMiddleware(), ...middlewares],
-    devTools:
-      /* istanbul ignore next line */
-      process.env.NODE_ENV !== 'production' ||
-      process.env.PUBLIC_URL.length > 0,
-    enhancers,
-  });
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
-  return store;
-}
+setupListeners(store.dispatch);

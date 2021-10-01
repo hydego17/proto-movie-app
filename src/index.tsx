@@ -11,47 +11,34 @@ import 'react-app-polyfill/stable';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import FontFaceObserver from 'fontfaceobserver';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
 
+// Import root app
 import { App } from 'app';
-
-import { HelmetProvider } from 'react-helmet-async';
-
-import { configureAppStore } from 'store/configureStore';
-
-import { ThemeProvider } from 'styles/theme/ThemeProvider';
+import { store } from 'store/configureStore';
+import { ChakraProvider } from 'styles/chakra';
 
 import reportWebVitals from 'reportWebVitals';
 
 // Initialize languages
 import './locales/i18n';
 
-// Observe loading of Inter (to remove 'Inter', remove the <link> tag in
-// the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Inter', {});
-
-// When Inter is loaded, add a font-family using Inter to the body
-openSansObserver.load().then(() => {
-  document.body.classList.add('fontLoaded');
-});
-
-const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeProvider>
+    <ChakraProvider>
       <HelmetProvider>
         <React.StrictMode>
           <App />
         </React.StrictMode>
       </HelmetProvider>
-    </ThemeProvider>
+    </ChakraProvider>
   </Provider>,
-  MOUNT_NODE,
+  MOUNT_NODE
 );
 
 // Hot reloadable translation json files
