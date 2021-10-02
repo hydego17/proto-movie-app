@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import {
   Modal,
   ModalOverlay,
@@ -18,8 +19,13 @@ type ModalDetailProps = {
 };
 
 export function ModalDetail({ isOpen, onClose }: ModalDetailProps) {
+  const history = useHistory();
   const movieId = useGetMovieId();
   const { data: movie, isLoading } = useGetMovieDetailQuery(movieId);
+
+  function goToDetail(id: number) {
+    history.push(`/movie/${id}`);
+  }
 
   if (!movie) return null;
 
@@ -86,8 +92,13 @@ export function ModalDetail({ isOpen, onClose }: ModalDetailProps) {
             )}
           </ModalBody>
           <ModalFooter>
-            {/* <Button onClick={onClose}>Close</Button> */}
-            <Button mt="4">View Detail</Button>
+            <Button
+              mt="4"
+              colorScheme="teal"
+              onClick={() => goToDetail(movie.id)}
+            >
+              View Detail
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
