@@ -6,7 +6,7 @@ import { Box, useDisclosure } from '@chakra-ui/react';
 import { useGetMovieId, useQueryParam } from 'app/hooks/url';
 
 import { PopularMovies } from './module/PopularMovies';
-import { HighRatedMovies } from './module/HighRatedMovies';
+import { TopRatedMovies } from './module/TopRatedMovies';
 import { ModalDetail } from './components/ModalDetail';
 
 export function HomePage() {
@@ -27,23 +27,23 @@ export function HomePage() {
   };
 
   return (
-    <StyledHomePage>
+    <StyledPage>
       <Helmet>
         <title>Home</title>
-        <meta name="description" content="A Boilerplate application homepage" />
+        <meta name="description" content="A Movie App" />
       </Helmet>
 
       <Box>
         <Box as="section">
           <PopularMovies />
 
-          <HighRatedMovies />
+          <TopRatedMovies />
 
           <ModalDetail isOpen={isOpen} onClose={onModalClose} />
         </Box>
       </Box>
-    </StyledHomePage>
+    </StyledPage>
   );
 }
 
-const StyledHomePage = styled.div``;
+const StyledPage = styled.div``;
