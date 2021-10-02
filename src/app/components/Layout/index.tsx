@@ -8,7 +8,7 @@ export function Layout({ children }) {
     <>
       <Header />
 
-      <Container as="main" p="4" maxW="container.xl" minH="100vh">
+      <Container as="main" px="4" maxW="container.xl" minH="100vh">
         {children}
       </Container>
 
