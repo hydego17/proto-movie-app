@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 export function useUrlQuery() {
   return new URLSearchParams(useLocation().search);
@@ -31,4 +31,13 @@ export function useQueryParam() {
   }, [history, location.pathname]);
 
   return { addQueryParam, deleteQueryParam };
+}
+
+export function useParamsId() {
+  const params = useParams<{ id: string }>();
+
+  if (params.id) {
+    return Number(params.id);
+  }
+  return null;
 }
