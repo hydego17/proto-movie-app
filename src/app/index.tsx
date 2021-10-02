@@ -8,8 +8,9 @@
 
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import { GlobalStyle } from 'styles/global-styles';
+import { GlobalStyle } from 'styles/global';
 import { Layout } from 'app/components';
 
 import { AppRoutes } from './routes';
@@ -17,7 +18,7 @@ import { AppRoutes } from './routes';
 export function App() {
   const { i18n } = useTranslation();
   return (
-    <>
+    <Router>
       <GlobalStyle />
       <Helmet
         titleTemplate="%s - StockBit Movie"
@@ -30,6 +31,6 @@ export function App() {
       <Layout>
         <AppRoutes />
       </Layout>
-    </>
+    </Router>
   );
 }
