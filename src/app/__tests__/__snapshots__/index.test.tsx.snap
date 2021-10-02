@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> should render and match the snapshot 1`] = `
-<React.Fragment>
-  <Memo(l) />
+<BrowserRouter>
+  <GlobalStyle />
   <Helmet
     defaultTitle="Movie App"
     defer={true}
@@ -22,5 +22,5 @@ exports[`<App /> should render and match the snapshot 1`] = `
   <Layout>
     <AppRoutes />
   </Layout>
-</React.Fragment>
+</BrowserRouter>
 `;

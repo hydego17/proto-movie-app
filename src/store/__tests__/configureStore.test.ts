@@ -1,19 +1,11 @@
-import { configureAppStore } from '../configureStore';
+import { store } from '../configureStore';
 
-describe('configureStore', () => {
-  it('should return a store with injected enhancers', () => {
-    const store = configureAppStore();
-    expect(store).toEqual(
+describe('store', () => {
+  it('should return a store containing moviesApi', () => {
+    expect(store.getState()).toEqual(
       expect.objectContaining({
-        runSaga: expect.any(Function),
-        injectedReducers: expect.any(Object),
-        injectedSagas: expect.any(Object),
-      }),
+        moviesApi: expect.any(Object),
+      })
     );
-  });
-
-  it('should return an empty store', () => {
-    const store = configureAppStore();
-    expect(store.getState()).toBeUndefined();
   });
 });
