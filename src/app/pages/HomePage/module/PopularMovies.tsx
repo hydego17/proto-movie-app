@@ -9,7 +9,7 @@ export function PopularMovies() {
   return (
     <>
       {isLoading && <Spinner />}
-      {data && <MovieList title="Popular Movies" movies={data.results} />}
+      {data && <MovieList title="Popular" movies={data.results} />}
     </>
   );
 }
