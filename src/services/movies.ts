@@ -10,13 +10,18 @@ export const moviesApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.themoviedb.org/3',
   }),
-  tagTypes: ['popularMovies', 'highRatedMovies', 'movieDetail'],
+  tagTypes: [
+    'popularMovies',
+    'topRatedMovies',
+    'movieDetail',
+    'searchedMovies',
+  ],
   endpoints: (builder) => ({
     // Popular Movies Query
     // query: void
     getPopularMovies: builder.query<IMoviesApi, void>({
       query: () => ({
-        url: `/discover/movie?sort_by=popularity.desc`,
+        url: `/movie/popular`,
         params: {
           api_key: apiKey,
         },
@@ -26,14 +31,14 @@ export const moviesApi = createApi({
 
     // High Rated Movies Query
     // query: void
-    getHighRatedMovies: builder.query<IMoviesApi, void>({
+    getTopRatedMovies: builder.query<IMoviesApi, void>({
       query: () => ({
-        url: `/discover/movie/?certification_country=US&certification=R&sort_by=vote_average.desc`,
+        url: `/movie/top_rated`,
         params: {
           api_key: apiKey,
         },
       }),
-      providesTags: ['highRatedMovies'],
+      providesTags: ['topRatedMovies'],
     }),
 
     // Movie Detail Query
@@ -43,12 +48,26 @@ export const moviesApi = createApi({
         url: `/movie/${id}`,
         params: {
           api_key: apiKey,
+          append_to_response: 'person,videos',
         },
       }),
       providesTags: (result) =>
         result
           ? [{ type: 'movieDetail' as const, id: result.id }, 'movieDetail']
           : ['movieDetail'],
+    }),
+
+    // Search Movies Query
+    // query: search(string)
+    searchMovies: builder.query<IMoviesApi, string>({
+      query: (search) => ({
+        url: `/search/movie`,
+        params: {
+          api_key: apiKey,
+          query: search,
+        },
+      }),
+      providesTags: ['searchedMovies'],
     }),
   }),
 });
@@ -57,6 +76,7 @@ export const moviesApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useGetPopularMoviesQuery,
+  useGetTopRatedMoviesQuery,
   useGetMovieDetailQuery,
-  useGetHighRatedMoviesQuery,
+  useSearchMoviesQuery,
 } = moviesApi;
