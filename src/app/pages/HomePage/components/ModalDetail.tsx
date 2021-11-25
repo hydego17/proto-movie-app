@@ -21,7 +21,15 @@ type ModalDetailProps = {
 export function ModalDetail({ isOpen, onClose }: ModalDetailProps) {
   const history = useHistory();
   const movieId = useGetMovieId();
-  const { data: movie, isLoading } = useGetMovieDetailQuery(movieId);
+  const {
+    data: movie,
+    isLoading,
+    status,
+  } = useGetMovieDetailQuery(movieId, {
+    skip: !movieId,
+  });
+
+  const isPending = status === 'pending';
 
   function goToDetail(id: number) {
     history.push(`/movie/${id}`);
@@ -44,7 +52,7 @@ export function ModalDetail({ isOpen, onClose }: ModalDetailProps) {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {isLoading ? (
+            {isLoading || isPending ? (
               <Spinner />
             ) : (
               <Flex
