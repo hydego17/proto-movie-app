@@ -44,9 +44,10 @@ export function ModalDetail({ isOpen, onClose }: ModalDetailProps) {
         isOpen={isOpen}
         motionPreset="slideInBottom"
         size="4xl"
+        scrollBehavior="inside"
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mx="4">
           <ModalHeader>
             {movie.title} ({movie.release_date.substr(0, 4)})
           </ModalHeader>
