@@ -20,8 +20,8 @@ export function useQueryParam() {
   const location = useLocation();
 
   const addQueryParam = useCallback(
-    (id: number) => {
-      history.push(location.pathname + `?detail=${id}`);
+    (query: string) => {
+      history.push(location.pathname + `?${query}`);
     },
     [history, location.pathname]
   );

@@ -14,7 +14,7 @@ export function Card({ movie }: CardProps) {
   const { addQueryParam } = useQueryParam();
 
   const onSelect = (id: number) => {
-    addQueryParam(id);
+    addQueryParam(`detail=${id}`);
   };
 
   return (
