@@ -20,6 +20,8 @@ export const useWindowSize = () => {
   }, []); // Empty array ensures that effect is only run on mount
 
   const isMobile = typeof width === 'number' && width < 600;
+  const isTablet = typeof width === 'number' && width > 600 && width < 1200;
+  const isDesktop = typeof width === 'number' && width > 1200;
 
-  return { isMobile, width };
+  return { isMobile, isTablet, isDesktop, width };
 };
