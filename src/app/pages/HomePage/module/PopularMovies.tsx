@@ -1,14 +1,14 @@
-import { Spinner } from '@chakra-ui/spinner';
 import { useGetPopularMoviesQuery } from 'services/movies';
 
 import { MovieList } from '../components/MovieList';
+import { MovieSkeleton } from '../components/MovieSkeleton';
 
 export function PopularMovies() {
   const { data, isLoading } = useGetPopularMoviesQuery();
 
   return (
     <>
-      {isLoading && <Spinner />}
+      {isLoading && <MovieSkeleton />}
       {data && <MovieList title="Popular" movies={data.results} />}
     </>
   );
