@@ -132,7 +132,7 @@ function SearchBarResult({ searchValue }: SearchBarResultProps) {
 
   const { results } = data;
 
-  const movies = results.slice(0, 10);
+  const movies = results.slice(0, 20);
 
   return (
     <Fade in>
