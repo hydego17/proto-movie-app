@@ -67,7 +67,6 @@ export function SearchBar() {
           w="full"
           type="text"
           rounded="md"
-          fontSize="sm"
           placeholder="Search Movies"
           value={searchValue}
           onChange={onChange}
