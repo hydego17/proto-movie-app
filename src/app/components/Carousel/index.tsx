@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import AliceCarousel, { Props } from 'react-alice-carousel';
 import styled from '@emotion/styled';
@@ -6,33 +7,39 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 interface CarouselProps extends Props {}
 
 export const Carousel = ({ items, ...props }: CarouselProps) => {
-  const renderPrevButton = ({ isDisabled }: { isDisabled: any }) => {
-    return (
-      <div
-        role="button"
-        className="carousel__arrow"
-        style={{ opacity: isDisabled ? 0 : 1 }}
-      >
-        <span>
-          <HiOutlineChevronLeft />
-        </span>
-      </div>
-    );
-  };
+  const renderPrevButton = useCallback(
+    ({ isDisabled }: { isDisabled: any }) => {
+      return (
+        <div
+          role="button"
+          className="carousel__arrow"
+          style={{ opacity: isDisabled ? 0 : 1 }}
+        >
+          <span>
+            <HiOutlineChevronLeft />
+          </span>
+        </div>
+      );
+    },
+    []
+  );
 
-  const renderNextButton = ({ isDisabled }: { isDisabled: any }) => {
-    return (
-      <div
-        role="button"
-        className="carousel__arrow"
-        style={{ opacity: isDisabled ? 0 : 1 }}
-      >
-        <span>
-          <HiOutlineChevronRight />
-        </span>
-      </div>
-    );
-  };
+  const renderNextButton = useCallback(
+    ({ isDisabled }: { isDisabled: any }) => {
+      return (
+        <div
+          role="button"
+          className="carousel__arrow"
+          style={{ opacity: isDisabled ? 0 : 1 }}
+        >
+          <span>
+            <HiOutlineChevronRight />
+          </span>
+        </div>
+      );
+    },
+    []
+  );
 
   return (
     <CarouselStyled>
