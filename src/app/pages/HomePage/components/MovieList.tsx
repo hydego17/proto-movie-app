@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Box, Heading, Divider } from '@chakra-ui/react';
 
 import { Card, Carousel } from 'app/components';
@@ -8,18 +9,20 @@ type MovieListProps = {
   title: string;
   movies: IMovies;
 };
+
+const responsive = {
+  0: { items: 2 },
+  600: { items: 3 },
+  1024: { items: 6 },
+};
+
 export const MovieList = ({ title, movies }: MovieListProps) => {
   const { isMobile } = useWindowSize();
 
-  const movieItems = movies.map((movie) => (
-    <Card key={movie.id} movie={movie} />
-  ));
-
-  const responsive = {
-    0: { items: 2 },
-    600: { items: 3 },
-    1024: { items: 6 },
-  };
+  const movieItems = useMemo(
+    () => movies.map((movie) => <Card key={movie.id} movie={movie} />),
+    [movies]
+  );
 
   return (
     <Box as="section" py="6">
@@ -35,6 +38,7 @@ export const MovieList = ({ title, movies }: MovieListProps) => {
           disableDotsControls
           paddingLeft={isMobile ? 60 : 0}
           paddingRight={isMobile ? 60 : 0}
+          touchMoveDefaultEvents={false}
         />
       </Box>
     </Box>
