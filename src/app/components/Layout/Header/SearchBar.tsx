@@ -147,7 +147,7 @@ function SearchBarResult({ searchValue }: SearchBarResultProps) {
         rounded="md"
         maxH={{ base: '70vh', md: '70vh' }}
         overflowY="hidden"
-        shadow={{ md: 'lg' }}
+        shadow="lg"
       >
         <Stack
           flex="1"
@@ -166,13 +166,14 @@ function SearchBarResult({ searchValue }: SearchBarResultProps) {
                       borderTopWidth="1px"
                       py="2"
                       px="2"
+                      spacing="4"
                       direction="row"
                       align="center"
                       _hover={{
                         bgColor: bgColorHover,
                       }}
                     >
-                      <Box as="figure" flex="30%">
+                      <Box as="figure" flex="20%">
                         <Image
                           rounded="sm"
                           src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -180,7 +181,7 @@ function SearchBarResult({ searchValue }: SearchBarResultProps) {
                         />
                       </Box>
 
-                      <Box flex="70%" py="1">
+                      <Box flex="80%" py="1">
                         <Heading
                           as="h4"
                           fontSize="sm"

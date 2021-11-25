@@ -1,11 +1,15 @@
 import { useHistory } from 'react-router-dom';
 import { Box, Heading, Container, HStack } from '@chakra-ui/react';
 
+import { useWindowSize } from 'app/hooks';
+
 import { SearchBar } from './SearchBar';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 export function Header() {
   const history = useHistory();
+
+  const { isMobile } = useWindowSize();
 
   function goToIndex() {
     history.push('/');
@@ -14,7 +18,7 @@ export function Header() {
   return (
     <Box borderBottomWidth="1px">
       <Container
-        p="2"
+        py="2"
         maxW="container.xl"
         display="flex"
         alignItems="center"
@@ -26,10 +30,17 @@ export function Header() {
         </Box>
 
         <HStack>
-          <SearchBar />
+          {!isMobile && <SearchBar />}
+
           <ColorModeSwitcher />
         </HStack>
       </Container>
+
+      {isMobile && (
+        <Box pb="4" px="4">
+          <SearchBar />
+        </Box>
+      )}
     </Box>
   );
 }
