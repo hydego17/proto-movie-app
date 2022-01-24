@@ -190,7 +190,9 @@ function SearchBarResult({ searchValue }: SearchBarResultProps) {
                           }}
                           noOfLines={2}
                         >
-                          {movie.title} ({movie.release_date.substr(0, 4)})
+                          {movie.title}{' '}
+                          {movie.release_date &&
+                            `(${movie.release_date?.slice(0, 4)})`}
                         </Heading>
                       </Box>
                     </Stack>
