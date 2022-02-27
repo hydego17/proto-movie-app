@@ -1,54 +1,40 @@
-import { useCallback } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import AliceCarousel, { Props } from 'react-alice-carousel';
+import AliceCarousel, { Props as CarouselProps } from 'react-alice-carousel';
 import styled from '@emotion/styled';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
+import { useColorMode } from '@chakra-ui/react';
 
-interface CarouselProps extends Props {}
+const renderButton =
+  (label: 'next' | 'prev') =>
+  ({ isDisabled }) => {
+    return (
+      <div
+        role="button"
+        className="carousel__arrow"
+        style={{ opacity: isDisabled ? 0 : 1 }}
+      >
+        <span>
+          {label === 'next' ? (
+            <HiOutlineChevronRight />
+          ) : (
+            <HiOutlineChevronLeft />
+          )}
+        </span>
+      </div>
+    );
+  };
 
 export const Carousel = ({ items, ...props }: CarouselProps) => {
-  const renderPrevButton = useCallback(
-    ({ isDisabled }: { isDisabled: any }) => {
-      return (
-        <div
-          role="button"
-          className="carousel__arrow"
-          style={{ opacity: isDisabled ? 0 : 1 }}
-        >
-          <span>
-            <HiOutlineChevronLeft />
-          </span>
-        </div>
-      );
-    },
-    []
-  );
-
-  const renderNextButton = useCallback(
-    ({ isDisabled }: { isDisabled: any }) => {
-      return (
-        <div
-          role="button"
-          className="carousel__arrow"
-          style={{ opacity: isDisabled ? 0 : 1 }}
-        >
-          <span>
-            <HiOutlineChevronRight />
-          </span>
-        </div>
-      );
-    },
-    []
-  );
+  const theme = useColorMode().colorMode;
 
   return (
-    <CarouselStyled>
+    <CarouselStyled theme={theme}>
       <AliceCarousel
         items={items}
         mouseTracking
         animationDuration={750}
-        renderPrevButton={renderPrevButton}
-        renderNextButton={renderNextButton}
+        renderPrevButton={renderButton('prev')}
+        renderNextButton={renderButton('next')}
         {...props}
       />
     </CarouselStyled>
@@ -56,6 +42,12 @@ export const Carousel = ({ items, ...props }: CarouselProps) => {
 };
 
 const CarouselStyled = styled.div`
+  body.chakra-ui-dark {
+    .carousel__arrow {
+      background: #c96767;
+    }
+  }
+
   .alice-carousel {
     & > div:first-of-type {
       .alice-carousel__wrapper {
@@ -95,17 +87,27 @@ const CarouselStyled = styled.div`
       width: 3rem;
       height: 3rem;
       border-radius: 3rem;
-      background: white;
+      background: ${(props) =>
+        props.theme === 'dark' ? 'var(--chakra-colors-gray-800)' : 'white'};
+      border-width: 1.5px;
+      border-style: solid;
+      border-color: ${(props) =>
+        props.theme === 'dark'
+          ? 'var(--chakra-colors-gray-700)'
+          : 'var(--chakra-colors-gray-200)'};
+
       text-align: center;
       cursor: pointer;
       pointer-events: auto;
       transition: all 0.3s ease;
       -webkit-tap-highlight-color: transparent;
-      border: 1.5px solid #e9edf4;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.08);
 
       svg {
-        color: #818181;
+        color: ${(props) =>
+          props.theme === 'dark'
+            ? 'var(--chakra-colors-gray-400)'
+            : 'var(--chakra-colors-gray-500)'};
         width: 1.5rem;
         height: 1.5rem;
         transition: all 0.3s ease;
@@ -113,7 +115,10 @@ const CarouselStyled = styled.div`
 
       &:hover {
         opacity: 1;
-        border-color: var(--main-color);
+        border-color: ${(props) =>
+          props.theme === 'dark'
+            ? 'var(--chakra-colors-gray-400)'
+            : 'var(--chakra-colors-gray-700)'};
         box-shadow: 0 0 0 1px var(--main-color);
         text-decoration: none;
 
